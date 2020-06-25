@@ -35,6 +35,7 @@ type MockClient struct {
 	PutGuestVsockFn                  func(params *ops.PutGuestVsockParams) (*ops.PutGuestVsockNoContent, error)
 	PutLoggerFn                      func(params *ops.PutLoggerParams) (*ops.PutLoggerNoContent, error)
 	PutMachineConfigurationFn        func(params *ops.PutMachineConfigurationParams) (*ops.PutMachineConfigurationNoContent, error)
+	PutMetricsFn                     func(params *ops.PutMetricsParams) (*ops.PutMetricsNoContent, error)
 }
 
 func (c *MockClient) GetMmds(params *ops.GetMmdsParams) (*ops.GetMmdsOK, error) {
@@ -152,6 +153,14 @@ func (c *MockClient) PutLogger(params *ops.PutLoggerParams) (*ops.PutLoggerNoCon
 func (c *MockClient) PutMachineConfiguration(params *ops.PutMachineConfigurationParams) (*ops.PutMachineConfigurationNoContent, error) {
 	if c.PutMachineConfigurationFn != nil {
 		return c.PutMachineConfigurationFn(params)
+	}
+
+	return nil, nil
+}
+
+func (c *MockClient) PutMetrics(params *ops.PutMetricsParams) (*ops.PutMetricsNoContent, error) {
+	if c.PutMetricsFn != nil {
+		return c.PutMetricsFn(params)
 	}
 
 	return nil, nil

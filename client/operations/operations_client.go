@@ -483,6 +483,34 @@ func (a *Client) PutMachineConfiguration(params *PutMachineConfigurationParams) 
 
 }
 
+/*
+PutMetrics initializes the metrics system by specifying a named pipe or a file for the metrics output
+*/
+func (a *Client) PutMetrics(params *PutMetricsParams) (*PutMetricsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPutMetricsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "putMetrics",
+		Method:             "PUT",
+		PathPattern:        "/metrics",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &PutMetricsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*PutMetricsNoContent), nil
+
+}
+
 // SetTransport changes the transport on the client
 func (a *Client) SetTransport(transport runtime.ClientTransport) {
 	a.transport = transport
@@ -506,4 +534,5 @@ type ClientIface interface {
 	PutGuestVsock(params *PutGuestVsockParams) (*PutGuestVsockNoContent, error)
 	PutLogger(params *PutLoggerParams) (*PutLoggerNoContent, error)
 	PutMachineConfiguration(params *PutMachineConfigurationParams) (*PutMachineConfigurationNoContent, error)
+	PutMetrics(params *PutMetricsParams) (*PutMetricsNoContent, error)
 }
