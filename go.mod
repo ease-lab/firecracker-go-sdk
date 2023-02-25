@@ -18,5 +18,5 @@ require (
 	github.com/sparrc/go-ping v0.0.0-20190613174326-4e5b6552494c
 	github.com/stretchr/testify v1.6.1
 	github.com/vishvananda/netlink v1.1.0
-	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
+	golang.org/x/sys v0.1.0
 )
